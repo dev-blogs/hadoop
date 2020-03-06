@@ -1,0 +1,17 @@
+mvn dependency:copy-dependencies
+javac -d bin -cp lib/*:src src/com/example/WordCounter.java
+jar -cfv wordcount.jar -C bin/ .
+
+hadoop fs -mkdir /user/cloudera/wordcount/input
+hadoop fs -put file0 /user/cloudera/wordcount/input
+hadoop fs -put file1 /user/cloudera/wordcount/input
+
+#hadoop jar bin/hadoop-test-0.0.1-SNAPSHOT.jar com.example.WordCounter /user/cloudera/wordcount/input /user/cloudera/wordcount/output
+hadoop jar wordcount.jar com.example.WordCounter /user/cloudera/wordcount/input /user/cloudera/wordcount/output
+
+hadoop fs -ls /user/cloudera/wordcount/output
+hadoop fs -cat /user/cloudera/wordcount/output/part-r-00000
+
+hadoop fs -rm /user/cloudera/wordcount/output/*
+hadoop fs -rm /user/cloudera/wordcount/output
+hadoop fs -rmdir /user/cloudera/wordcount/output
