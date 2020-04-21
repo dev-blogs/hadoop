@@ -1,6 +1,6 @@
 cd hadoop-test
 mvn dependency:copy-dependencies
-javac -d bin -cp lib/*:src src/com/example/WordCounter.java
+javac -d bin -cp lib/* src/com/example/WordCounter.java
 jar -cfv wordcount.jar -C bin/ .
 
 hadoop fs -mkdir /user/cloudera/wordcount/input
